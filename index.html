@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Default Prediction</title>
+    <style>
+        /* Add CSS styles for better appearance */
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 20%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            display: inline;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Credit Card Default Prediction</h1>
+    <form action="/predict" method="post" onsubmit="return validateForm()">
+        <fieldset class="formset">
+        <div class="input-group">
+            <label for="LIMIT_BAL">Credit Limit (LIMIT_BAL):</label>
+            <input type="text" name="LIMIT_BAL" id="LIMIT_BAL" placeholder="Enter the credit limit assigned to the individual's credit card"  required>
+            <span class="error-message" id="LIMIT_BAL-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="SEX">Gender (SEX):</label>
+            <input type="text" name="SEX" id="SEX" placeholder="Enter the gender of the credit card holder" required>
+            <span class="error-message" id="SEX-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="EDUCATION">Education (EDUCATION):</label>
+            <input type="text" name="EDUCATION" id="EDUCATION" placeholder="Enter the educational background of the credit card holder" required>
+            <span class="error-message" id="EDUCATION-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="MARRIAGE">Marital Status (MARRIAGE):</label>
+            <input type="text" name="MARRIAGE" id="MARRIAGE" placeholder="Enter the marital status of the credit card holder" required>
+            <span class="error-message" id="MARRIAGE-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="AGE">Age (AGE):</label>
+            <input type="text" name="AGE" id="AGE" placeholder="Enter the age of the credit card holder" required>
+            <span class="error-message" id="AGE-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="PAY_0">Repayment Status for last month (PAY_0):</label>
+            <input type="text" name="PAY_0" id="PAY_0" placeholder="Enter the repayment status for the past month" required>
+            <span class="error-message" id="PAY_0-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="PAY_2">Repayment Status for 2 months ago (PAY_2):</label>
+            <input type="text" name="PAY_2" id="PAY_2" placeholder="Enter the repayment status for 2 months ago" required>
+            <span class="error-message" id="PAY_2-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="PAY_3">Repayment Status for 3 months ago (PAY_3):</label>
+            <input type="text" name="PAY_3" id="PAY_3" placeholder="Enter the repayment status for 3 months ago" required>
+            <span class="error-message" id="PAY_3-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="PAY_4">Repayment Status for 4 months ago (PAY_4):</label>
+            <input type="text" name="PAY_4" id="PAY_4" placeholder="Enter the repayment status for 4 months ago" required>
+            <span class="error-message" id="PAY_4-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="PAY_5">Repayment Status for 5 months ago (PAY_5):</label>
+            <input type="text" name="PAY_5" id="PAY_5" placeholder="Enter the repayment status for 5 months ago" required>
+            <span class="error-message" id="PAY_5-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="PAY_6">Repayment Status for 6 months ago (PAY_6):</label>
+            <input type="text" name="PAY_6" id="PAY_6" placeholder="Enter the repayment status for 6 months ago" required>
+            <span class="error-message" id="PAY_6-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="BILL_AMT1">Bill Amount for last month (BILL_AMT1):</label>
+            <input type="text" name="BILL_AMT1" id="BILL_AMT1" placeholder="Enter the bill amount for last month" required>
+            <span class="error-message" id="BILL_AMT1-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="BILL_AMT2">Bill Amount for 2 months ago (BILL_AMT2):</label>
+            <input type="text" name="BILL_AMT2" id="BILL_AMT2" placeholder="Enter the bill amount for 2 months ago" required>
+            <span class="error-message" id="BILL_AMT2-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="BILL_AMT3">Bill Amount for 3 months ago (BILL_AMT3):</label>
+            <input type="text" name="BILL_AMT3" id="BILL_AMT3" placeholder="Enter the bill amount for 3 months ago" required>
+            <span class="error-message" id="BILL_AMT3-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="BILL_AMT4">Bill Amount for 4 months ago (BILL_AMT4):</label>
+            <input type="text" name="BILL_AMT4" id="BILL_AMT4" placeholder="Enter the bill amount for 4 months ago" required>
+            <span class="error-message" id="BILL_AMT4-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="BILL_AMT5">Bill Amount for 5 months ago (BILL_AMT5):</label>
+            <input type="text" name="BILL_AMT5" id="BILL_AMT5" placeholder="Enter the bill amount for 5 months ago" required>
+            <span class="error-message" id="BILL_AMT5-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="BILL_AMT6">Bill Amount for 6 months ago (BILL_AMT6):</label>
+            <input type="text" name="BILL_AMT6" id="BILL_AMT6" placeholder="Enter the bill amount for 6 months ago" required>
+            <span class="error-message" id="BILL_AMT6-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="PAY_AMT1">Amount of previous payment for last month (PAY_AMT1):</label>
+            <input type="text" name="PAY_AMT1" id="PAY_AMT1" placeholder="Enter the amount of previous payment for last month" required>
+            <span class="error-message" id="PAY_AMT1-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="PAY_AMT2">Amount of previous payment for 2 months ago (PAY_AMT2):</label>
+            <input type="text" name="PAY_AMT2" id="PAY_AMT2" placeholder="Enter the amount of previous payment for 2 months ago" required>
+            <span class="error-message" id="PAY_AMT2-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="PAY_AMT3">Amount of previous payment for 3 months ago (PAY_AMT3):</label>
+            <input type="text" name="PAY_AMT3" id="PAY_AMT3" placeholder="Enter the amount of previous payment for 3 months ago" required>
+            <span class="error-message" id="PAY_AMT3-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="PAY_AMT4">Amount of previous payment for 4 months ago (PAY_AMT4):</label>
+            <input type="text" name="PAY_AMT4" id="PAY_AMT4" placeholder="Enter the amount of previous payment for 4 months ago" required>
+            <span class="error-message" id="PAY_AMT4-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="PAY_AMT5">Amount of previous payment for 5 months ago (PAY_AMT5):</label>
+            <input type="text" name="PAY_AMT5" id="PAY_AMT5" placeholder="Enter the amount of previous payment for 5 months ago" required>
+            <span class="error-message" id="PAY_AMT5-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="PAY_AMT6">Amount of previous payment for 6 months ago (PAY_AMT6):</label>
+            <input type="text" name="PAY_AMT6" id="PAY_AMT6" placeholder="Enter the amount of previous payment for 6 months ago" required>
+            <span class="error-message" id="PAY_AMT6-error">This field is required.</span>
+        </div>
+        <div class="input-group">
+            <label for="user_index">Select User Index:</label>
+            <select name="user_index" id="user_index">
+                {% for i in range(10) %}
+                <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit">Predict</button>
+    </fieldset>
+    </form>
+    <script>
+        // JavaScript to validate form
+        function validateForm() {
+            let isValid = true;
+            let requiredFields = document.querySelectorAll('input[required]');
+            requiredFields.forEach(function(field) {
+                let errorId = field.id + '-error';
+                if (!field.value) {
+                    document.getElementById(errorId).style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById(errorId).style.display = 'none';
+                }
+            });
+            return isValid;
+        }
+    </script>
+</body>
+</html>

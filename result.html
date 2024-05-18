@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+</head>
+<body>
+    <h1>Prediction Result</h1>
+    <p>Random Forest Prediction: {{ prediction_rf }}</p>
+    <p>XGBoost Prediction: {{ prediction_xgb }}</p>
+    <p>Overall Prediction: {{ overall_prediction }}</p>
+    
+    <!-- Display the profile analysis HTML -->
+    {{ profile_html | safe }}
+</body>
+</html>
